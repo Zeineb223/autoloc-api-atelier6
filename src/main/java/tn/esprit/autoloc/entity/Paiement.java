@@ -1,0 +1,40 @@
+
+package tn.esprit.autoloc.entity;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+
+import tn.esprit.autoloc.enums.ModePaiement;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
+
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class Paiement {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long idPaiement;
+
+    private BigDecimal montant;
+
+    private LocalDate datePaiement;
+
+    @Enumerated(EnumType.STRING)
+    private ModePaiement modePaiement;
+
+    // Relation avec Contrat
+    @ManyToOne
+    @JoinColumn(name = "contrat_id")
+    @JsonBackReference("contrat-paiements")
+    private Contrat contrat;
+
+}
